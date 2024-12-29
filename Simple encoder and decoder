@@ -1,0 +1,135 @@
+import java.util.*;
+import java.io.*;
+import java.util.Arrays;
+public class Main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String e_d;
+                                                                                  //assigning values to each character
+        String[] lA= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+                "U", "V", "W", "X", "Y", "Z"};
+
+        String[] mA= {"&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9", "&10",
+                "&11", "&12", "&13", "&14", "&15", "&16", "&17", "&18", "&19", "&20",
+                "&21", "&22", "&23", "&24", "&25", "&26"};
+
+        String[] la={"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+                "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                "u", "v", "w", "x", "y", "z"};
+
+        String[] ma={"%AA", "%BB", "%CC", "%DD", "%EE", "%FF", "%GG", "%HH", "%II", "%JJ",
+                "%KK", "%LL", "%MM", "%NN", "%OO", "%PP", "%QQ", "%RR", "%SS", "%TT",
+                "%UU", "%VV", "%WW", "%XX", "%YY", "%ZZ"};
+
+        String[] num={" ","0","1", "2", "3", "4", "5", "6", "7", "8", "9","!","@","#","$","%","^","&","*","(",")",
+                "_","-","+","=","{","}","[","]","|","\\",":",";","\"","\'","<",">",",",".","?","/"};
+
+        String[] numc={"#@#","#A??","#aA", "#bB", "#cC", "#dD", "#eE", "#fF", "#gG", "#hH", "#iI", "#jJ",
+                "#kK", "#lL", "#mM", "#nN", "#oO", "#pP", "#qQ", "#rR", "#sS", "#tT",
+                "#uU", "#vV", "#wW", "#xX", "#yY", "#zZ","#A?a", "#B?b", "#C?c", "#D?d", "#E?e", "#F?f",
+                "#G?g", "#H?h", "#I?i", "#J?j", "#K?k", "#L?l", "#M?m"};
+
+        System.out.print("Encode or Decode(e/d): ");
+        e_d = sc.nextLine().toUpperCase();
+        if(e_d.equals("E")) {
+            String a;
+            System.out.println("Enter the text :");
+            a = sc.nextLine();                                                      //User Input
+            for (int i = 0; i < a.length(); i++) {
+                char[] charArray = a.toCharArray();
+                char ab = charArray[i];
+                                                                                   //Searching in the array begins
+                if (Character.isUpperCase(charArray[i])) {
+                    if (charArray[i] < 'M') {
+                        for (int j = 0; j <=13; j++) {
+                            char A = lA[j].charAt(0);
+                            if (ab == A) {
+                                System.out.print(mA[j] + "$");
+                                break;
+                            }
+                        }
+                    } else if (charArray[i] > 'M') {
+                        for (int j = 25; j >=13; j--) {
+                            char A = lA[j].charAt(0);
+                            if (ab == A) {
+                                System.out.print(mA[j] + "$");
+                                break;
+                            }
+                        }
+                    } else if (charArray[i] == 'M') {
+                        System.out.print(mA[12] + "$");
+                    }
+                } else if (Character.isLowerCase(charArray[i])) {
+                    if (charArray[i] < 'm') {
+                        for (int j = 0; j < 12; j++) {
+                            char aA = la[j].charAt(0);
+                            if (ab == aA) {
+                                System.out.print(ma[j] + "$");
+                                break;
+                            }
+                        }
+                    } else if (charArray[i] > 'm') {
+                        for (int j = 25; j >=13; j--) {
+                            char aA = la[j].charAt(0);
+                            if (ab == aA) {
+                                System.out.print(ma[j] + "$");
+                                break;
+                            }
+                        }
+                    } else if (charArray[i] == 'm') {
+                        System.out.print(ma[12] + "$");
+                    }
+                } else {
+                    for (int j = 0; j < 41; j++) {
+                        char N = num[j].charAt(0);
+                        if (ab == N) {
+                            System.out.print(numc[j] + "$");
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        else if(e_d.equals("D")){
+            String a;
+            System.out.println("Enter the encrypted code :");
+            a = sc.nextLine();
+            String[] splitEncrypt = a.split("\\$");
+            for(int i=0;i<splitEncrypt.length;i++){
+                if(splitEncrypt[i].charAt(0) == '&'){
+                    for(int j=0;j<26;j++){
+                        if(splitEncrypt[i].equals(mA[j])){
+                            System.out.print(lA[j]);
+                        }
+                    }
+                }
+                else if(splitEncrypt[i].charAt(0) == '%'){
+                    for(int j=0;j<26;j++){
+                        if(splitEncrypt[i].equals(ma[j])){
+                            System.out.print(la[j]);
+                        }
+                    }
+                }
+                else if(splitEncrypt[i].charAt(0) == '#'){
+                    for(int j=0;j<41;j++){
+                        if(splitEncrypt[i].equals(numc[j])){
+                            System.out.print(num[j]);
+                        }
+                    }
+                }                                                   
+                else{
+                    System.out.println();
+                    System.out.println("Something has gone wrong in the encrypted code!refferal code missing");
+                    System.out.printf("Error in \"%s\"...please resolve it and then retry again!!<ERROR POSITION>",splitEncrypt[i]);
+                }
+            }
+
+        }
+        else{
+            System.out.println("Invalid input!!!Retry again with valid input please!!");
+        }
+    }
+}
